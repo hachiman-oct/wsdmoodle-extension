@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "WSDMoodle Smoother",
+  "version": "0.0.1",
+  "description": "Refactored version with modular settings and function mapping",
+  "icons": {
+    "48": "sources/icon.svg"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://wsdmoodle.waseda.jp/*"
+      ],
+      "js": [
+        "dist/content.bundle.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "options_page": "options.html",
+  "action": {
+    "default_popup": "options.html",
+    "default_icon": {
+      "48": "sources/icon.svg"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "sources/header.svg"
+      ],
+      "matches": [
+        "https://wsdmoodle.waseda.jp/*"
+      ]
+    }
+  ]
+}

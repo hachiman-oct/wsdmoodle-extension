@@ -1,0 +1,7 @@
+<svg width="800" height="160" xmlns="http://www.w3.org/2000/svg">
+  <text x="400" y="80" font-size="120"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        fill="orange"
+        font-weight="bold">WSDMoodle</text>
+</svg>

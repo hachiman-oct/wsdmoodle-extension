@@ -19,9 +19,9 @@
   "permissions": [
     "storage"
   ],
-  "options_page": "options.html",
+  "options_page": "options/options.html",
   "action": {
-    "default_popup": "options.html",
+    "default_popup": "options/options.html",
     "default_icon": {
       "48": "sources/icon.svg"
     }

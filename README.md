@@ -1,29 +1,39 @@
-# WSDMoodle Smoother
+# WSDMoodle Modifier
 
-WSDMoodle Smootherは、早稲田大学のMoodle（WSDMoodle）をより使いやすくするためのChrome拡張機能です。  
-ヘッダーの変更、不要リンクの非表示、一括ダウンロードボタンの追加など、さまざまな機能を提供します。
+WSDMoodle Smoother is a Firefox extension that enhances the usability of Waseda University's Moodle (WSDMoodle).  
+It provides various features to improve your Moodle experience, such as header customization, hiding unnecessary links, batch download, and more.
 
-## 主な機能
+## Main Features
 
-- ヘッダー変更
-- 不要リンク非表示
-- 一括ダウンロードボタン
-- 動画視聴アラート
-- 空のコースインデックス・セクション非表示
-- ログイン自動クリック
-- ホームページ自動遷移
+1. **Change Header**  
+   Customize the Moodle header for a cleaner look.
 
-## インストール方法
+2. **Hide Unused Links**  
+   Remove unnecessary links from the interface for better focus.
 
-1. このリポジトリをダウンロードまたはクローンします。
-2. Chromeの「拡張機能」ページ（chrome://extensions/）を開きます。
-3. 「デベロッパーモード」を有効にします。
-4. 「パッケージ化されていない拡張機能を読み込む」から本フォルダを選択します。
+3. **Batch Download Button**  
+   Add a button to download multiple files at once from course pages.
 
-## 設定
+4. **Video Watch Alert**  
+   Display alerts related to video watching status.
 
-拡張機能のアイコンをクリック、またはオプションページから各機能の有効/無効を切り替えられます。
+5. **Hide Empty Course Index**  
+   Hide empty items in the course index for a tidier view.
 
-## ライセンス
+6. **Hide Empty Sections**  
+   Automatically hide empty sections in course pages.
+
+7. **Auto Click Login**  
+   Automatically click the login button on the login page.
+
+8. **Auto Redirect to Home**  
+   Redirect to the home page after login automatically.
+
+## Settings
+
+Click the extension icon in your browser to open the popup.  
+You can enable or disable each feature individually from the settings panel.
+
+## License
 
 [MIT License](./LICENSE)

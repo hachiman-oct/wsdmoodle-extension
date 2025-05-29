@@ -1,7 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "WSDMoodle Smoother",
+  "name": "WSDMoodle Modifier",
   "version": "1.0.0",
+    "browser_specific_settings": {
+    "gecko": {
+      "id": "wsdmoodle-modifier@hachiman-oct"
+    }
+  },
+  "author": "Hachiman Oct",
+  "homepage_url": "https://github.com/hachiman-oct",
   "description": "Refactored version with modular settings and function mapping",
   "icons": {
     "48": "sources/icon.svg"
@@ -19,9 +26,8 @@
   "permissions": [
     "storage"
   ],
-  "options_page": "options/options.html",
   "action": {
-    "default_popup": "options/options.html",
+    "default_popup": "popup/popup.html",
     "default_icon": {
       "48": "sources/icon.svg"
     }

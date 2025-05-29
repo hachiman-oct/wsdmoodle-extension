@@ -1,20 +1,10 @@
+import { defaultSettings } from "./settings.js";
 import { changeHeader } from "./features/changeHeader.js";
 import { hideUnusedLink } from "./features/hideUnusedLink.js";
 import { moodleDlBtn } from "./features/moodleDlBtn.js";
 import { alertVideoStatus } from "./features/videoMonitor.js";
 import { pageMap } from "./features/pageMap.js";
 import { hideElements } from "./features/hideElements.js";
-
-const defaultSettings = {
-    changeHeader: true,
-    hideUnusedLink: true,
-    moodleDlBtn: true,
-    alertVideoStatus: true,
-    hideEmptyCourseIndex: true,
-    hideEmptySections: true,
-    autoClickLogin: true,
-    setHomePage: true,
-};
 
 chrome.storage.local.get(defaultSettings, (settings) => {
     let homePath = "/";
@@ -35,12 +25,12 @@ chrome.storage.local.get(defaultSettings, (settings) => {
     }
     if (settings.changeHeader) changeHeader(homePath);
     if (settings.hideUnusedLink) hideUnusedLink();
-    if (settings.moodleDlBtn && pageMap.isCourse) moodleDlBtn();
+    if (settings.moodleDlBtn && pageMap.isCourse) moodleDlBtn(3000);
     if (settings.alertVideoStatus && pageMap.isVideo) alertVideoStatus();
     if (settings.hideEmptySections && pageMap.isCourse) {
-        hideElements(".sectionbody ul", ".course-section");
+        hideElements('[data-for="section"][role="region"]', '[data-for="cmitem"]');
     }
     if (settings.hideEmptyCourseIndex && (pageMap.isCourse || pageMap.isModule)) {
-        hideElements(".courseindex-item-content ul", ".courseindex-section");
+        hideElements('[data-for="section"][role="treeitem"]', '[data-for="cm"]');
     }
 });

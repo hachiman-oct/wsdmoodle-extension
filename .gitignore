@@ -1,1 +1,3 @@
 dist/
+.vscode/
+build-and-rename.js

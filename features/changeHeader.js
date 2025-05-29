@@ -1,4 +1,7 @@
 export function changeHeader(homePath) {
+    // すでにロゴがある場合は何もしない
+    if (document.getElementById("wsdmoodle-logo")) return;
+
     const moodleLogo = chrome.runtime.getURL("sources/header.svg");
     const primaryNavigation = document.querySelector(".primary-navigation");
     const brandLogo = document.querySelector(".navbar-brand");
@@ -12,7 +15,7 @@ export function changeHeader(homePath) {
 
     const logoSvg = document.createElement("img");
     logoSvg.src = moodleLogo;
-    logoSvg.id = "moodle-logo";
+    logoSvg.id = "wsdmoodle-logo";
 
     document.querySelector(".container-fluid")?.insertBefore(logoLink, primaryNavigation);
     logoLink.appendChild(logoSvg);

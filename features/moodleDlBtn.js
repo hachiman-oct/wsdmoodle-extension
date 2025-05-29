@@ -1,10 +1,7 @@
 export function moodleDlBtn() {
-    const isCoursePage = window.location.href.includes("https://wsdmoodle.waseda.jp/course/view.php");
-    if (!isCoursePage) return;
-
-    // セクションがまだ描画されていない場合はリトライ
-    const secs = document.querySelectorAll(".course-content .course-section");
-    if (secs.length === 0) {
+    // セクションがまだ描画されていない場合は、MutationObserverで監視
+    const courseContent = document.querySelector(".course-content");
+    if (!courseContent) {
         setTimeout(moodleDlBtn, 1000);
         return;
     }
@@ -13,50 +10,50 @@ export function moodleDlBtn() {
     let shouldPause = false;
     let shouldResume = false;
 
-    const btnCss = `
-        .btn {
-            color: #1d2125;
-            background-color: #fff;
-            border-color: #ced4da;
-            min-height: 32px;
-            font-weight: 700;
-            border-radius: .5rem;
-        }
-        .btn-complete {
-            background-color: #d7e4d6;
-            border-color: #d7e4d6;
-            color: #1c3f1a;
-        }
-    `;
-    const btnContainerClassList = ["activity", "activity-item"];
-    const dlBtnClassList = [
-        "btn", "btn-outline-secondary", "btn-sm", "text-nowrap", "activity-completion"
+    // ボタンのスタイル
+    const dlBtnUnDoneClassList = [
+        "btn", "btn-outline-secondary", "btn-sm", "text-nowrap"
     ];
-    const dlBtnCompleteClassList = [
-        "btn", "btn-outline-secondary", "btn-sm", "text-nowrap",
-        "activity-completion", "btn-success", "btn-complete"
+    const dlBtnDoneClassList = [
+        "btn", "btn-success", "btn-sm", "text-nowrap"
     ];
-    const dlBtnId = "dlbtn";
-    const dlBtnCompleteId = "dlbtn-complete";
-    const dlBtnText = "Download all uncompleted files in this section";
-    const dlBtnCompleteText = "All files downloaded!";
+    const dlBtnUnDoneId = "dlbtn";
+    const dlBtnDoneId = "dlbtn-complete";
+    const dlBtnUnDoneText = "Download all uncompleted files in this section";
+    const dlBtnDoneText = "All files downloaded!";
 
+    // セクションが既にあればボタン設置
+    const secs = courseContent.querySelectorAll('[data-for="section"][role="region"]');
     secs.forEach(sec => {
         displayBtn(sec);
     });
+
+    // セクション追加を監視
+    const sectionObserver = new MutationObserver((mutationsList) => {
+        for (const mutation of mutationsList) {
+            mutation.addedNodes.forEach(node => {
+                if (node.nodeType === 1 && node.classList.contains("course-section")) {
+                    displayBtn(node);
+                }
+            });
+        }
+    });
+    sectionObserver.observe(courseContent, { childList: true, subtree: true });
 
     observeBtnChanges();
 
     function displayBtn(section) {
         let links = [];
         let actsHasResource = [];
-        const acts = section.querySelectorAll(".activity");
+        const acts = section.querySelectorAll('.modtype_resource[data-for="cmitem"]');
         acts.forEach(act => {
-            if (!hasResourceLink(act) || hasToggleBtn(act)) return;
-            const isCompleted = isActivityCompleted(act);
-            const link = act.querySelector("a");
+            const btn = act.querySelector("button");
+            if (!btn) return;
+
+            const link = btn.dataset.toggletype == "manual:mark-done" ? act.querySelector("a") : undefined;
             actsHasResource.push(act);
-            if (isCompleted || !link) return;
+            if (!link) return;
+
             links.push(link);
         });
 
@@ -69,29 +66,35 @@ export function moodleDlBtn() {
         const oldbtn = section.querySelector("#dlbtn-container");
         if (oldbtn) oldbtn.remove();
 
-        const btnContainer = document.createElement("div");
-        btnContainer.id = "dlbtn-container";
-        btnContainer.style.textAlign = "right";
-        if (btnContainerClassList.length > 0) btnContainer.classList.add(...btnContainerClassList);
+        // ボタンの設置
+        const container = document.createElement("div");
+        container.className = "activity-item";
+        container.id = "dlbtn-container";
+
+        const inner = document.createElement("div");
+        inner.className = "activity-completion";
+        inner.style.textAlign = "right";
 
         const dlBtn = document.createElement("button");
-        const btnId = skipDl ? dlBtnCompleteId : dlBtnId;
+        const btnId = skipDl ? dlBtnDoneId : dlBtnUnDoneId;
         if (btnId) dlBtn.id = btnId;
 
-        const targetClassList = skipDl ? dlBtnCompleteClassList : dlBtnClassList;
+        const targetClassList = skipDl ? dlBtnDoneClassList : dlBtnUnDoneClassList;
         if (targetClassList.length > 0) dlBtn.classList.add(...targetClassList);
 
-        const text = skipDl ? dlBtnCompleteText : dlBtnText;
+        const text = skipDl ? dlBtnDoneText : dlBtnUnDoneText;
         if (text) dlBtn.textContent = text;
+
+        inner.appendChild(dlBtn);
+        container.appendChild(inner);
 
         const target = section.querySelector(".sectionbody") || section.querySelector(".content");
         if (target) {
-            target.insertBefore(btnContainer, target.firstChild);
+            target.insertBefore(container, target.firstChild);
         }
-        btnContainer.appendChild(dlBtn);
 
         const style = document.createElement('style');
-        style.textContent = btnCss;
+        // style.textContent = btnCss;
         document.head.appendChild(style);
 
         if (skipDl) return;
@@ -105,33 +108,13 @@ export function moodleDlBtn() {
             }
 
             const newBtn = dlBtn.cloneNode(true);
-            newBtn.textContent = dlBtnCompleteText;
-            newBtn.classList.add(...dlBtnCompleteClassList);
+            newBtn.textContent = dlBtnDoneText;
+            newBtn.classList.add(...dlBtnDoneClassList);
             dlBtn.replaceWith(newBtn);
 
             shouldResume = true;
             resumeObserver(activitiesToObserve);
         });
-    }
-
-    function hasResourceLink(el) {
-        const modLink = el.querySelector("a");
-        if (!modLink) return false;
-        const onclickValue = modLink.getAttribute('onclick');
-        if (onclickValue) return false;
-        return modLink.href.includes("mod/resource");
-    }
-
-    function isActivityCompleted(el) {
-        if (!el || !(el instanceof Element)) return false;
-        const btnSuccess = el.querySelector(".btn-success");
-        return btnSuccess !== null;
-    }
-
-    function hasToggleBtn(el) {
-        const btn = el.querySelector("button");
-        if (!btn) return false;
-        return btn.dataset.action == "toggle-manual-completion";
     }
 
     function delay(ms) {
@@ -144,7 +127,7 @@ export function moodleDlBtn() {
             if (shouldPause) return;
             for (const mutation of mutationsList) {
                 const act = mutation.target;
-                const section = act.closest(".course-section");
+                const section = act.closest('[data-for="section"][role="region"]');
                 if (!section) return;
                 displayBtn(section);
             }

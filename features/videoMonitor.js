@@ -40,9 +40,6 @@ export function monitorVideo(video, onComplete, onStop) {
 
 // alertVideoStatusもエクスポート
 export function alertVideoStatus() {
-    const isVideoPage = window.location.pathname === "/mod/millvi/view.php";
-    if (!isVideoPage) return;
-
     const videos = document.querySelectorAll('video');
     if (videos.length === 0) {
         setTimeout(alertVideoStatus, 1000);

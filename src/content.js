@@ -2,9 +2,9 @@ import { defaultSettings } from "./settings.js";
 import { changeHeader } from "./features/changeHeader.js";
 import { hideUnusedLink } from "./features/hideUnusedLink.js";
 import { moodleDlBtn } from "./features/moodleDlBtn.js";
-import { alertVideoStatus } from "./features/videoMonitor.js";
-import { pageMap } from "./features/pageMap.js";
+import { monitorVideo } from "./features/monitorVideo.js";
 import { hideElements } from "./features/hideElements.js";
+import { pageMap } from "./features/utils.js";
 
 chrome.storage.local.get(defaultSettings, (settings) => {
     let homePath = "/";
@@ -18,7 +18,7 @@ chrome.storage.local.get(defaultSettings, (settings) => {
         }
     }
     if (settings.autoClickLogin && pageMap.isLogin) {
-        const loginButton = document.querySelector(".login-identityprovider-btn").click();
+        const loginButton = document.querySelector(".login-identityprovider-btn");
         if (loginButton) {
             loginButton.click();
         }
@@ -26,7 +26,7 @@ chrome.storage.local.get(defaultSettings, (settings) => {
     if (settings.changeHeader) changeHeader(homePath);
     if (settings.hideUnusedLink) hideUnusedLink();
     if (settings.moodleDlBtn && pageMap.isCourse) moodleDlBtn(3000);
-    if (settings.alertVideoStatus && pageMap.isVideo) alertVideoStatus();
+    if (settings.alertVideoStatus) monitorVideo();
     if (settings.hideEmptySections && pageMap.isCourse) {
         hideElements('[data-for="section"][role="region"]', '[data-for="cmitem"]');
     }

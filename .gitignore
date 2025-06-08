@@ -1,4 +1,20 @@
-dist/
+# ビルド成果物・ビルド関係
+/dist/
+/chrome-artifacts/
+/web-ext-artifacts/
+
+# VSCode設定
 .vscode/
-build-and-rename.js
-web-ext-artifacts/
+
+# 秘密鍵
+*.pem
+
+# manifest.json
+manifest.json
+
+scripts/
+
+package.json
+package-lock.json
+
+node_modules/

@@ -7,6 +7,7 @@ export const defaultSettings = {
     hideEmptySections: true,
     autoClickLogin: true,
     setHomePage: true,
+    changePlayBackRate: true,
 };
 
 export const labels = {
@@ -18,4 +19,5 @@ export const labels = {
     hideEmptySections: "Hide Empty Sections",
     autoClickLogin: "Auto Click Login",
     setHomePage: "Auto Redirect to Home",
+    changePlayBackRate: "Change Playback Rate to 2.0x",
 };

@@ -5,6 +5,7 @@ import { moodleDlBtn } from "./features/moodleDlBtn.js";
 import { monitorVideo } from "./features/monitorVideo.js";
 import { hideElements } from "./features/hideElements.js";
 import { pageMap } from "./features/utils.js";
+import { changePlayBackRate } from "./features/changePlayBackRate.js";
 
 chrome.storage.local.get(defaultSettings, (settings) => {
     let homePath = "/";
@@ -32,5 +33,8 @@ chrome.storage.local.get(defaultSettings, (settings) => {
     }
     if (settings.hideEmptyCourseIndex && (pageMap.isCourse || pageMap.isModule)) {
         hideElements('[data-for="section"][role="treeitem"]', '[data-for="cm"]');
+    }
+    if (settings.changePlayBackRate) {
+        changePlayBackRate(pageMap.isModule ? "moodle" : "learningx");
     }
 });

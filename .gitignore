@@ -1,3 +1,4 @@
 dist/
 .vscode/
 build-and-rename.js
+web-ext-artifacts/

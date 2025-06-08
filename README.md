@@ -1,6 +1,6 @@
 # WSDMoodle Modifier
 
-[install url](https://addons.mozilla.org/ja/firefox/addon/wsdmoodle-modifier/)
+[Install Url](https://addons.mozilla.org/ja/firefox/addon/wsdmoodle-modifier/)
 
 WSDMoodle Smoother is a Firefox extension that enhances the usability of Waseda University's Moodle (WSDMoodle).  
 It provides various features to improve your Moodle experience, such as header customization, hiding unnecessary links, batch download, and more.
@@ -32,6 +32,9 @@ Japanese version is available [here](docs/README.ja.md).
 
 8. **Auto Redirect to Home**  
    Redirect to the home page after login automatically.
+
+9. **Force 2x Video Playback Rate**  
+   Automatically sets the playback speed of course and lecture videos to 2.0x for efficient viewing. This works for both Moodle and LearningX video players, and applies even if the video or controls are loaded dynamically.
 
 ## Settings
 

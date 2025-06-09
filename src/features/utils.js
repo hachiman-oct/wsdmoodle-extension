@@ -25,9 +25,9 @@ export function watchVideoElements(callback) {
 }
 
 /**
- * 動画の状態（再生・一時停止・終了）を監視し、コールバックで状態を通知する（コールバック配列方式）
+ * 動画の状態（再生・終了）を監視し、コールバックで状態を通知する（コールバック配列方式）
  * @param {HTMLVideoElement} video
- * @param {(status: 'play' | 'pause' | 'end', video: HTMLVideoElement) => void} callback
+ * @param {(status: 'play' | 'end', video: HTMLVideoElement) => void} callback
  */
 export function attachVideoStatusListeners(video, callback) {
     if (!video._videoStatusCallbacks) {
@@ -40,11 +40,6 @@ export function attachVideoStatusListeners(video, callback) {
                 cleanup();
             }
         }
-        function handlePause() {
-            if (!ended && video.currentTime < video.duration) {
-                video._videoStatusCallbacks.forEach(cb => cb("pause", video));
-            }
-        }
         function handlePlay() {
             if (!ended) {
                 video._videoStatusCallbacks.forEach(cb => cb("play", video));
@@ -52,12 +47,10 @@ export function attachVideoStatusListeners(video, callback) {
         }
         function cleanup() {
             video.removeEventListener("ended", handleEnded);
-            video.removeEventListener("pause", handlePause);
             video.removeEventListener("play", handlePlay);
             video._videoStatusCallbacks = null;
         }
         video.addEventListener("ended", handleEnded);
-        video.addEventListener("pause", handlePause);
         video.addEventListener("play", handlePlay);
     }
     // 同じコールバックが複数回登録されないようにする

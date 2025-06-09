@@ -2,7 +2,7 @@
 
 **[Firefox Addon](https://addons.mozilla.org/ja/firefox/addon/wsdmoodle-modifier/)**
 
-WSDMoodle Smootherは、早稲田大学のMoodle（WSDMoodle）の使い勝手を向上させるFirefox拡張機能です。  
+WSDMoodle Modifierは、早稲田大学のMoodle（WSDMoodle）の使い勝手を向上させるFirefox拡張機能です。  
 ヘッダーのカスタマイズ、不要なリンクの非表示、一括ダウンロードボタンの追加など、Moodleの利用体験を向上させるさまざまな機能を提供します。
 
 **English version is available [here](../README.md).**

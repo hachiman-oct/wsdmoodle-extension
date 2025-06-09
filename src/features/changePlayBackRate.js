@@ -11,7 +11,13 @@ export function changePlayBackRate(page) {
         if (el) {
             const parent = el.closest(".control-menu");
             const control = parent && parent.querySelector(".control-current");
-            if (control) control.click();
+            // すでに2.0が選択されている場合は何もしない
+            if (control && control.textContent && control.textContent.includes("2.0")) {
+                return true;
+            }
+            if (control) {
+                control.click();
+            }
             const rect = el.getBoundingClientRect();
             el.dispatchEvent(new MouseEvent("mousedown", {
                 bubbles: true,
@@ -25,7 +31,9 @@ export function changePlayBackRate(page) {
                 clientX: rect.left + rect.width / 2,
                 clientY: rect.top + rect.height / 2
             }));
+            return true;
         }
+        return false;
     }
 
     if (page === "learningx") {

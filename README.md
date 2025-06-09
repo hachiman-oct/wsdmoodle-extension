@@ -2,7 +2,7 @@
 
 **[Firefox Addon](https://addons.mozilla.org/ja/firefox/addon/wsdmoodle-modifier/)**
 
-WSDMoodle Smoother is a Firefox extension that enhances the usability of Waseda University's Moodle (WSDMoodle).  
+WSDMoodle Modifier is a Firefox extension that enhances the usability of Waseda University's Moodle (WSDMoodle).  
 It provides various features to improve your Moodle experience, such as header customization, hiding unnecessary links, batch download, and more.
 
 **日本語版は[こちら](docs/README.ja.md)からご覧いただけます。**
